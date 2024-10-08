@@ -144,7 +144,7 @@ export default function Home() {
       <div className={"home-content"}>
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Create Your Token</CardTitle>
+            <CardTitle>Create Your Token on the Solana Blockchain (Devnet)</CardTitle>
             <CardDescription>Enter the details for your new token on Solana.</CardDescription>
           </CardHeader>
           <CardContent>
