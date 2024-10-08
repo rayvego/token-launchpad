@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { pack } from "@solana/spl-token-metadata";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
@@ -129,15 +129,18 @@ export default function Home() {
       console.log('Associated Token Account:', associatedTokenAddress.toBase58());
 
       setMintPublicKey(mintKeypair.publicKey.toBase58());
-      // find the token on solscan devnet
-      setSolscanLink(`https://solscan.io/token/${mintPublicKey}?cluster=devnet`);
-      revalidatePath("/")
     } catch (error) {
       console.error('Error creating and minting token:', error);
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (mintPublicKey) {
+      setSolscanLink(`https://solscan.io/token/${mintPublicKey}?cluster=devnet`);
+    }
+  }, [mintPublicKey]); // Update solscanLink when mintPublicKey changes
 
   return (
     <section className={"home"}>
@@ -226,7 +229,7 @@ export default function Home() {
                 <div>{mintPublicKey && (
                   <>
                     <div className="text-xl">Token created and minted: {mintPublicKey}</div>
-                    <Link href={solscanLink} className={"text-xl text-blue-500 hover:underline"}>Verify on solscan.io</Link>
+                    <Link href={solscanLink} className={"text-xl text-blue-500 hover:underline"}>Verify on Solscan.io</Link>
                   </>
                 )}</div>
               </form>
