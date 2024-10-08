@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Link from "next/link";
+import Nav from "@/components/Nav";
+import "@solana/wallet-adapter-react-ui/styles.css";
+import AppWalletProvider from "@/components/AppWalletProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,13 +27,28 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+    <body
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    >
+    <AppWalletProvider>
+          <main className={"flex w-full h-screen"}>
+            <div className={"flex flex-col size-full"}>
+              <div className={"root-layout"}>
+                <Link href="/">
+                  <h1 className="text-3xl">Token Launchpad</h1>
+                </Link>
+                <div>
+                  <Nav/>
+                </div>
+              </div>
+              {children}
+            </div>
+          </main>
+    </AppWalletProvider>
+    </body>
     </html>
   );
 }
